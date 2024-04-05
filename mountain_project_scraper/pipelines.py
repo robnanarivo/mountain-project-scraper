@@ -22,8 +22,8 @@ class MountainProjectScraperPipeline:
             os.makedirs(self.folder_name)
 
     def close_spider(self, spider):
-        for file in self.file_handles.values():
-            file.close()
+        for file_handle in self.file_handles.values():
+            file_handle[0].close()
 
     def process_item(self, item, spider):
         # Determine the type of item
