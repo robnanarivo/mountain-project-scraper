@@ -2,6 +2,7 @@ import scrapy
 from mountain_project_scraper.items import AreaItem, RouteItem
 from bs4 import BeautifulSoup
 
+
 class AreasSpider(scrapy.Spider):
     name = 'areas_routes'
     allowed_domains = ['mountainproject.com']
@@ -35,7 +36,8 @@ class AreasSpider(scrapy.Spider):
         long, lat = (response.xpath('//table[@class="description-details"]//tr[td="GPS:"]/td[2]/text()')
                      .get().strip().split(', '))
 
-        area_item = AreaItem(name=area_name,
+        area_item = AreaItem(id=area_id,
+                             name=area_name,
                              description=area_description,
                              long=long,
                              lat=lat,
@@ -74,7 +76,8 @@ class AreasSpider(scrapy.Spider):
         user_rating = response.css(f'span#starsWithAvgText-{route_id}::text').getall()[1].strip()
         route_description = self.innertext(response.css('div.fr-view'))
 
-        route_item = RouteItem(name=route_name,
+        route_item = RouteItem(id=route_id,
+                               name=route_name,
                                grade=grade,
                                type=climb_type,
                                length=length,
@@ -150,4 +153,3 @@ class AreasSpider(scrapy.Spider):
             elif 'Grade' in element:
                 commitment_grade = element
         return climb_type, length, pitch, commitment_grade
-

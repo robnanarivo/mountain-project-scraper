@@ -7,6 +7,7 @@ import scrapy
 
 
 class AreaItem(scrapy.Item):
+    id = scrapy.Field()
     name = scrapy.Field()
     description = scrapy.Field()
     long = scrapy.Field()
@@ -17,6 +18,7 @@ class AreaItem(scrapy.Item):
 
 
 class RouteItem(scrapy.Item):
+    id = scrapy.Field()
     name = scrapy.Field()
     grade = scrapy.Field()
     type = scrapy.Field()
