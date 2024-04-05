@@ -106,7 +106,8 @@ class AreasSpider(scrapy.Spider):
             'Ewbanks': '.rateEwbanks',
             'UIAA': '.rateUIAA',
             'ZA': '.rateZA',
-            'British': '.rateBritish'
+            'British': '.rateBritish',
+            'FontFrench': '.rateFont',
         }
 
         # Extract grades for each grading system, if available
