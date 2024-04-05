@@ -6,7 +6,26 @@
 import scrapy
 
 
-class MountainProjectScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class AreaItem(scrapy.Item):
+    name = scrapy.Field()
+    description = scrapy.Field()
+    long = scrapy.Field()
+    lat = scrapy.Field()
+    url = scrapy.Field()
+    parent_name = scrapy.Field()
+    parent_id = scrapy.Field()
+
+
+class RouteItem(scrapy.Item):
+    name = scrapy.Field()
+    grade = scrapy.Field()
+    type = scrapy.Field()
+    length = scrapy.Field()
+    pitch = scrapy.Field()
+    commitment_grade = scrapy.Field()
+    protection = scrapy.Field()
+    user_rating = scrapy.Field()
+    description = scrapy.Field()
+    url = scrapy.Field()
+    parent_name = scrapy.Field()
+    parent_id = scrapy.Field()
