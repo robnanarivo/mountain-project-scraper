@@ -12,11 +12,25 @@ class AreasSpider(scrapy.Spider):
 
     def parse(self, response):
         self.logger.info('start crawling for ' + response.request.url)
-        sub_areas_links = response.css('div.lef-nav-row a')
 
         # parse initial data
         area_name = response.css('h1::text').get().strip()
+        area_description = self.innertext(response.css('div.fr-view'))
+        long, lat = (response.xpath('//table[@class="description-details"]//tr[td="GPS:"]/td[2]/text()')
+                     .get().strip().split(', '))
 
+        area_item = AreaItem(id=response.request.url.rsplit('/', 2)[-2],
+                             name=area_name,
+                             description=area_description,
+                             long=long,
+                             lat=lat,
+                             url=response.request.url,
+                             parent_name='HEAD',
+                             parent_id='-1'
+                             )
+        yield area_item
+
+        sub_areas_links = response.css('div.lef-nav-row a')
         if sub_areas_links is not None:
             yield from response.follow_all(sub_areas_links, callback=self.parse_area,
                                            cb_kwargs=dict(parent_name=area_name, parent_url=response.url))
