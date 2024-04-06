@@ -13,6 +13,7 @@ class AreaItem(scrapy.Item):
     long = scrapy.Field()
     lat = scrapy.Field()
     url = scrapy.Field()
+    child_ids = scrapy.Field()
     parent_name = scrapy.Field()
     parent_id = scrapy.Field()
 

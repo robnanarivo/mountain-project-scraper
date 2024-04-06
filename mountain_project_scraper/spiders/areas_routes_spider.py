@@ -18,6 +18,10 @@ class AreasSpider(scrapy.Spider):
         area_description = self.innertext(response.css('div.fr-view'))
         long, lat = (response.xpath('//table[@class="description-details"]//tr[td="GPS:"]/td[2]/text()')
                      .get().strip().split(', '))
+        child_ids = []
+        child_urls = response.css('div.lef-nav-row a::attr(href)').extract()
+        if child_urls:
+            child_ids = [url.rsplit('/', 2)[-2] for url in child_urls]
 
         area_item = AreaItem(id=response.request.url.rsplit('/', 2)[-2],
                              name=area_name,
@@ -25,6 +29,7 @@ class AreasSpider(scrapy.Spider):
                              long=long,
                              lat=lat,
                              url=response.request.url,
+                             child_ids=child_ids,
                              parent_name='HEAD',
                              parent_id='-1'
                              )
@@ -49,6 +54,13 @@ class AreasSpider(scrapy.Spider):
         area_description = self.innertext(response.css('div.fr-view'))
         long, lat = (response.xpath('//table[@class="description-details"]//tr[td="GPS:"]/td[2]/text()')
                      .get().strip().split(', '))
+        child_ids = []
+        child_area_urls = response.css('div.lef-nav-row a::attr(href)').extract()
+        child_route_urls = response.css('table#left-nav-route-table tr a::attr(href)').extract()
+        if child_area_urls:
+            child_ids += [url.rsplit('/', 2)[-2] for url in child_area_urls]
+        if child_route_urls:
+            child_ids += [url.rsplit('/', 2)[-2] for url in child_route_urls]
 
         area_item = AreaItem(id=area_id,
                              name=area_name,
@@ -56,6 +68,7 @@ class AreasSpider(scrapy.Spider):
                              long=long,
                              lat=lat,
                              url=response.request.url,
+                             child_ids=child_ids,
                              parent_name=parent_name,
                              parent_id=parent_id
                              )
