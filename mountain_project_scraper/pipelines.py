@@ -30,7 +30,7 @@ class MountainProjectScraperPipeline:
         if isinstance(item, AreaItem):
             file_name = os.path.join(self.folder_name, 'areas.csv')
         elif isinstance(item, RouteItem):
-            file_name = os.path.join(self.folder_name, 'route.csv')
+            file_name = os.path.join(self.folder_name, 'routes.csv')
         else:
             return item  # Unknown item
 
