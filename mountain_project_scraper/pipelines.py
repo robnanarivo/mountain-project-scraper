@@ -9,7 +9,7 @@ from itemadapter import ItemAdapter
 
 import csv
 import os
-from mountain_project_scraper.items import AreaItem, RouteItem
+from mountain_project_scraper.items import AreaItem, RouteItem, HTMLItem
 
 
 class MountainProjectScraperPipeline:
@@ -31,6 +31,8 @@ class MountainProjectScraperPipeline:
             file_name = os.path.join(self.folder_name, 'areas.csv')
         elif isinstance(item, RouteItem):
             file_name = os.path.join(self.folder_name, 'routes.csv')
+        elif isinstance(item, HTMLItem):
+            file_name = os.path.join(self.folder_name, 'html.csv')
         else:
             return item  # Unknown item
 

@@ -33,3 +33,7 @@ class RouteItem(scrapy.Item):
     url = scrapy.Field()
     parent_name = scrapy.Field()
     parent_id = scrapy.Field()
+
+
+class HTMLItem(scrapy.Item):
+    html = scrapy.Field()
