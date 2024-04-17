@@ -39,7 +39,7 @@ class AreasSpider(scrapy.Spider):
         yield area_item
 
         # save raw html
-        html_item = HTMLItem(html=response.css('html').get())
+        html_item = HTMLItem(html=response.css('div.row.pt-main-content').get())
         yield html_item
 
         sub_areas_links = response.css('div.lef-nav-row a')
@@ -86,7 +86,7 @@ class AreasSpider(scrapy.Spider):
         yield area_item
 
         # save raw html
-        html_item = HTMLItem(html=response.css('html').get())
+        html_item = HTMLItem(html=response.css('div.row.pt-main-content').get())
         yield html_item
 
         # scrape sub areas if exist
@@ -135,7 +135,7 @@ class AreasSpider(scrapy.Spider):
         yield route_item
 
         # save raw html
-        html_item = HTMLItem(html=response.css('html').get())
+        html_item = HTMLItem(html=response.css('div.row.pt-main-content').get())
         yield html_item
 
     def innertext(self, selector):
