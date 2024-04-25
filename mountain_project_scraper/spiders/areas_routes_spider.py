@@ -1,6 +1,6 @@
 import scrapy
 from scrapy import Request, FormRequest
-from mountain_project_scraper.items import AreaItem, RouteItem, HTMLItem
+from mountain_project_scraper.items import AreaItem, RouteItem
 from bs4 import BeautifulSoup
 import unicodedata
 import os
@@ -67,12 +67,8 @@ class AreasSpider(scrapy.Spider):
                              parent_id=parent_id
                              )
         yield Request(
-            f"https://www.mountainproject.com/comments/forObject/Climb-Lib-Models-Route/{area_id}?sortOrder=oldest&showAll=true",
+            f"https://www.mountainproject.com/comments/forObject/Climb-Lib-Models-Area/{area_id}?sortOrder=oldest&showAll=true",
             callback=self.parse_comment, meta={'item': area_item})
-
-        # save raw html
-        # html_item = HTMLItem(html=response.css('div.row.pt-main-content').get())
-        # yield html_item
 
         # scrape sub areas if exist
         sub_areas_links = response.css('div.lef-nav-row a')
@@ -122,9 +118,6 @@ class AreasSpider(scrapy.Spider):
         yield Request(
             f"https://www.mountainproject.com/comments/forObject/Climb-Lib-Models-Route/{route_id}?sortOrder=oldest&showAll=true",
             callback=self.parse_comment, meta={'item': route_item})
-        # save raw html
-        # html_item = HTMLItem(html=response.css('div.row.pt-main-content').get())
-        # yield html_item
 
     def parse_comment(self, response):
         comment = self.extract_comment(response)
@@ -152,7 +145,7 @@ class AreasSpider(scrapy.Spider):
         titles = self.innertext(response.xpath("//div[@class='fr-view']/preceding-sibling::h2"))
         contents = self.innertext(response.css('div.fr-view'))
         for title, content in zip(titles, contents):
-            description += title.strip() + '\n' + content.strip() + '\n'
+            description += title.strip() + '\n' + content.strip() + '\n-----\n'
         return description
 
     def extract_comment(self, response):
@@ -163,7 +156,7 @@ class AreasSpider(scrapy.Spider):
         for content, time, like in zip(contents, times, likes):
             comment += (content.strip() + '\n'
                         + 'comment time: ' + time.strip() + '\n'
-                        + 'up votes: ' + like.strip() + '\n\n')
+                        + 'up votes: ' + like.strip() + '\n-----\n')
         return comment
 
 
