@@ -9,7 +9,7 @@ from itemadapter import ItemAdapter
 
 import csv
 import os
-from mountain_project_scraper.items import AreaItem, RouteItem, HTMLItem
+from mountain_project_scraper.items import AreaItem, RouteItem
 
 
 class MountainProjectScraperPipeline:
